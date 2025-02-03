@@ -1,9 +1,9 @@
-import events from "events";
+import { EventEmitter } from "events";
 import express from "express";
 import LoggerService from "./services/logger-service.js";
 import { getAudits, createAuditTable, insertAudit } from "./db.js";
 
-export const auditEmitter = new events.EventEmitter();
+export const auditEmitter = new EventEmitter();
 const auditEvent = "audit";
 
 export const audit = (auditAction, data, status, error, auditBy, auditOn) => {
@@ -31,7 +31,7 @@ auditEmitter.on(auditEvent, async (auditData) => {
       auditData.auditBy,
       auditData.auditOn
     );
-    console.log("✅Audit saved to database!");
+    console.log("Audit saved to database!");
   } catch (error) {
     console.error("Error saving audit:", error);
     console.error("Audit data that failed to save:", auditData);
